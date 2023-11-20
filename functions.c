@@ -1,6 +1,7 @@
 #include "main.h"
 
 /**
+<<<<<<< HEAD
  * print_character -it Prints a character
  * @type: List of arguments using vardic Function
  * @buff: the Buffer array to handle print Function
@@ -9,6 +10,16 @@
  * @pre_ion: Precision specification
  * @siz: Size specifier
  * Return: Num of characters printed
+=======
+ * print_char - Prints a char
+ * @types: List a of arguments
+ * @buffer: Buffer array to handle print
+ * @flags:  Calculate active flags
+ * @width: Width
+ * @precision: Precision specification
+ * @size: Size specifier
+ * Return: Number of chars printed
+>>>>>>> 333de7cde74bce8e6c68fac0ded8f017297c78e9
  */
 int print_character(va_list type, char buff[],
 	int flag, int wid, int pre_ion, int siz)
