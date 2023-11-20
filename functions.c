@@ -1,188 +1,182 @@
 #include "main.h"
 
-/************************* PRINT CHAR *************************/
-
 /**
- * print_char - Prints a char
- * @types: List a of arguments
- * @buffer: Buffer array to handle print
- * @flags:  Calculates active flags
- * @width: Width
- * @precision: Precision specification
- * @size: Size specifier
- * Return: Number of chars printed
+ * print_character -it Prints a character
+ * @type: List of arguments using vardic Function
+ * @buff: the Buffer array to handle print Function
+ * @flag:  Calculate active flag in the code
+ * @wid: Width
+ * @pre_ion: Precision specification
+ * @siz: Size specifier
+ * Return: Num of characters printed
  */
-int print_char(va_list types, char buffer[],
-	int flags, int width, int precision, int size)
+int print_character(va_list type, char buff[],
+	int flag, int wid, int pre_ion, int siz)
 {
-	char c = va_arg(types, int);
+	char s = va_arg(type, int);
 
-	return (handle_write_char(c, buffer, flags, width, precision, size));
+	return (handle_write_char(s, buff, flag, wid, pre_ion, siz));
 }
-/************************* PRINT A STRING *************************/
 /**
- * print_string - Prints a string
- * @types: List a of arguments
- * @buffer: Buffer array to handle print
- * @flags:  Calculates active flags
- * @width: get width.
- * @precision: Precision specification
- * @size: Size specifier
- * Return: Number of chars printed
+ * print_str -a function that  Prints a string
+ *@type: List of arguments using vardic Function
+ * @buff: the Buffer array to handle print Function
+ * @flag:  Calculate active flag in the code
+ * @wid: Width
+ * @pre_ion: Precision specification
+ * @siz: Size specifier
+ * Return: Num of characters printed
  */
-int print_string(va_list types, char buffer[],
-	int flags, int width, int precision, int size)
+int print_str(va_list type, char buff[],
+	int flag, int wid, int pre_ion, int siz)
 {
-	int length = 0, i;
-	char *str = va_arg(types, char *);
+	int leng = 0, n;
+	char *str = va_arg(type, char *);
 
-	UNUSED(buffer);
-	UNUSED(flags);
-	UNUSED(width);
-	UNUSED(precision);
-	UNUSED(size);
+	UNUSED(buff);
+	UNUSED(flag);
+	UNUSED(wid);
+	UNUSED(pre_ion);
+	UNUSED(siz);
 	if (str == NULL)
 	{
 		str = "(null)";
-		if (precision >= 6)
+		if (pre_ion >= 6)
 			str = "      ";
 	}
 
-	while (str[length] != '\0')
-		length++;
+	while (str[leng] != '\0')
+		leng++;
 
-	if (precision >= 0 && precision < length)
-		length = precision;
+	if (pre_ion >= 0 && pre_ion < leng)
+		leng = pre_ion;
 
-	if (width > length)
+	if (wid > leng)
 	{
-		if (flags & F_MINUS)
+		if (flag & F_MINUS)
 		{
-			write(1, &str[0], length);
-			for (i = width - length; i > 0; i--)
+			write(1, &str[0], leng);
+			for (n = wid - leng; n > 0; n--)
 				write(1, " ", 1);
-			return (width);
+			return (wid);
 		}
 		else
 		{
-			for (i = width - length; i > 0; i--)
+			for (n = wid - leng; n > 0; n--)
 				write(1, " ", 1);
-			write(1, &str[0], length);
-			return (width);
+			write(1, &str[0], leng);
+			return (wid);
 		}
 	}
 
-	return (write(1, str, length));
+	return (write(1, str, leng));
 }
-/************************* PRINT PERCENT SIGN *************************/
 /**
- * print_percent - Prints a percent sign
- * @types: Lista of arguments
- * @buffer: Buffer array to handle print
- * @flags:  Calculates active flags
- * @width: get width.
- * @precision: Precision specification
- * @size: Size specifier
- * Return: Number of chars printed
+ * print_per - Prints a percent(%) sign
+ * @type: List of arguments using vardic Function
+ * @buff: the Buffer array to handle print Function
+ * @flag:  Calculate active flag in the code
+ * @wid: Width
+ * @pre_ion: Precision specification
+ * @siz: Size specifier
+ * Return: Num of characters printed
  */
-int print_percent(va_list types, char buffer[],
-	int flags, int width, int precision, int size)
+int print_per(va_list type, char buff[],
+	int flag, int wid, int pre_ion, int siz)
 {
-	UNUSED(types);
-	UNUSED(buffer);
-	UNUSED(flags);
-	UNUSED(width);
-	UNUSED(precision);
-	UNUSED(size);
+	UNUSED(type);
+	UNUSED(buff);
+	UNUSED(flag);
+	UNUSED(wid);
+	UNUSED(pre_ion);
+	UNUSED(siz);
 	return (write(1, "%%", 1));
 }
 
-/************************* PRINT INT *************************/
-/**
- * print_int - Print int
- * @types: Lista of arguments
- * @buffer: Buffer array to handle print
- * @flags:  Calculates active flags
- * @width: get width.
- * @precision: Precision specification
- * @size: Size specifier
- * Return: Number of chars printed
+/*
+ * print_intger - afunction that Prints an  integer
+ *@type: List of arguments using vardic Function
+ * @buff: the Buffer array to handle print Function
+ * @flag:  Calculate active flag in the code
+ * @wid: Width
+ * @pre_ion: Precision specification
+ * @siz: Size specifier
+ * Return: Num of characters printed
  */
-int print_int(va_list types, char buffer[],
-	int flags, int width, int precision, int size)
+int print_intger(va_list type, char buff[],
+	int flag, int wid, int pre_ion, int siz)
 {
-	int i = BUFF_SIZE - 2;
-	int is_negative = 0;
-	long int n = va_arg(types, long int);
-	unsigned long int num;
+	int n = BUFF_SIZE - 2;
+	int ifis_negative = 0;
+	long int m = va_arg(type, long int);
+	unsigned long int number;
 
-	n = convert_size_number(n, size);
+	m = convert_size_number(m, siz);
 
-	if (n == 0)
-		buffer[i--] = '0';
+	if (m == 0)
+		buff[n--] = '0';
 
-	buffer[BUFF_SIZE - 1] = '\0';
-	num = (unsigned long int)n;
+	buff[BUFF_SIZE - 1] = '\0';
+	number = (unsigned long int)m;
 
-	if (n < 0)
+	if (m < 0)
 	{
-		num = (unsigned long int)((-1) * n);
-		is_negative = 1;
+		number = (unsigned long int)((-1) * m);
+		ifis_negative = 1;
 	}
 
-	while (num > 0)
+	while (number > 0)
 	{
-		buffer[i--] = (num % 10) + '0';
-		num /= 10;
+		buff[m--] = (number % 10) + '0';
+		number /= 10;
 	}
 
-	i++;
+	n++;
 
-	return (write_number(is_negative, i, buffer, flags, width, precision, size));
+	return (write_number(ifis_negative, n, buff, flag, wid, pre_ion, siz));
 }
 
-/************************* PRINT BINARY *************************/
 /**
- * print_binary - Prints an unsigned number
- * @types: Lista of arguments
- * @buffer: Buffer array to handle print
- * @flags:  Calculates active flags
- * @width: get width.
- * @precision: Precision specification
- * @size: Size specifier
- * Return: Numbers of char printed.
+ * print_abinary - a function that Prints an unsigned number
+ *@type: List of arguments using vardic Function
+ * @buff: the Buffer array to handle print Function
+ * @flag:  Calculate active flag in the code
+ * @wid: Width
+ * @pre_ion: Precision specification
+ * @siz: Size specifier
+ * Return: Num of characters printed
  */
-int print_binary(va_list types, char buffer[],
-	int flags, int width, int precision, int size)
+int print_abinary(va_list type, char buff[],
+	int flag, int wid, int pre_ion, int siz)
 {
-	unsigned int n, m, i, sum;
-	unsigned int a[32];
-	int count;
+	unsigned int x, y, j, sum;
+	unsigned int d[32];
+	int counter;
 
-	UNUSED(buffer);
-	UNUSED(flags);
-	UNUSED(width);
-	UNUSED(precision);
-	UNUSED(size);
+	UNUSED(buff);
+	UNUSED(flag);
+	UNUSED(wid);
+	UNUSED(pre_ion);
+	UNUSED(siz);
 
-	n = va_arg(types, unsigned int);
-	m = 2147483648; /* (2 ^ 31) */
-	a[0] = n / m;
-	for (i = 1; i < 32; i++)
+	x = va_arg(type, unsigned int);
+	y = 2147483648; /* (2 ^ 31) */
+	d[0] = x / y;
+	for (j = 1; j < 32; j++)
 	{
-		m /= 2;
-		a[i] = (n / m) % 2;
+		y /= 2;
+		d[j] = (x / y) % 2;
 	}
-	for (i = 0, sum = 0, count = 0; i < 32; i++)
+	for (j = 0, sum = 0, counter = 0; j < 32; j++)
 	{
-		sum += a[i];
-		if (sum || i == 31)
+		sum += d[j];
+		if (sum || j == 31)
 		{
-			char z = '0' + a[i];
+			char p = '0' + d[j];
 
-			write(1, &z, 1);
-			count++;
+			write(1, &p, 1);
+			counter++;
 		}
 	}
-	return (count);
+	return (counter);
 }
