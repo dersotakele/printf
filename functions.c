@@ -26,7 +26,7 @@ int print_character(va_list type, char buff[],
 {
 	char s = va_arg(type, int);
 
-	return (handle_write_char(s, buff, flag, wid, pre_ion, siz));
+	return (handling_write_char(s, buff, flag, wid, pre_ion, siz));
 }
 /**
  * print_str -a function that  Prints a string
@@ -122,7 +122,7 @@ int print_intger(va_list type, char buff[],
 	long int m = va_arg(type, long int);
 	unsigned long int number;
 
-	m = convert_size_number(m, siz);
+	m = converting_size_number(m, siz);
 
 	if (m == 0)
 		buff[n--] = '0';

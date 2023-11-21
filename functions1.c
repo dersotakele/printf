@@ -1,161 +1,154 @@
 #include "main.h"
 
-/************************* PRINT UNSIGNED NUMBER *************************/
 /**
- * print_unsigned - Prints an unsigned number
- * @types: List a of arguments
- * @buffer: Buffer array to handle print
- * @flags:  Calculate active flags
- * @width: get width
- * @precision: Precision specification
- * @size: Size specifier
- * Return: Number of chars printed.
+ * print_unsignednum - that  Prints an unsigned number
+ * @type: List a number of arguments in the function
+ * @buff: Buffer array to handle print
+ * @flag: it the  Calculate active flags
+ * @wid: get width
+ * @pre_ion: Precision specification
+ * @siz: Size specifier
+ * Return: Num of characters printed.
  */
-int print_unsigned(va_list types, char buffer[],
-	int flags, int width, int precision, int size)
+int print_unsignednum(va_list type, char buff[],
+	int flag, int wid, int pre_ion, int siz)
 {
-	int i = BUFF_SIZE - 2;
-	unsigned long int num = va_arg(types, unsigned long int);
+	int n = BUFF_SIZE - 2;
+	unsigned long int number = va_arg(type, unsigned long int);
 
-	num = convert_size_unsgnd(num, size);
+	number = converting_size_unsgnd(number, siz);
 
-	if (num == 0)
-		buffer[i--] = '0';
+	if (number == 0)
+		buff[n--] = '0';
 
-	buffer[BUFF_SIZE - 1] = '\0';
+	buff[BUFF_SIZE - 1] = '\0';
 
-	while (num > 0)
+	while (number > 0)
 	{
-		buffer[i--] = (num % 10) + '0';
-		num /= 10;
+		buff[n--] = (number % 10) + '0';
+		number /= 10;
 	}
 
-	i++;
+	n++;
 
-	return (write_unsgnd(0, i, buffer, flags, width, precision, size));
+	return (writing_unsgnd(0, n, buff, flag, wid, pre_ion, siz));
 }
-
-/************* PRINT UNSIGNED NUMBER IN OCTAL  ****************/
 /**
- * print_octal - Prints an unsigned number in octal notation
- * @types: Lista of arguments
- * @buffer: Buffer array to handle print
- * @flags:  Calculates active flags
- * @width: get width
- * @precision: Precision specification
- * @size: Size specifier
- * Return: Number of chars printed
+ * printing_octal -  a function Prints an unsigned number in octal notation
+ * @type: List a number of arguments in the function
+ * @buff: Buffer array to handle print
+ * @flag: it the  Calculate active flags
+ * @wid: get width
+ * @pre_ion: Precision specification
+ * @siz: Size specifier
+ * Return: Num of characters printed.
  */
-int print_octal(va_list types, char buffer[],
-	int flags, int width, int precision, int size)
+int printing_octal(va_list type, char buff[],
+	int flag, int wid, int pre_ion, int siz)
 {
 
-	int i = BUFF_SIZE - 2;
-	unsigned long int num = va_arg(types, unsigned long int);
-	unsigned long int init_num = num;
+	int n = BUFF_SIZE - 2;
+	unsigned long int number = va_arg(type, unsigned long int);
+	unsigned long int init_number = number;
 
-	UNUSED(width);
+	UNUSED(wid);
 
-	num = convert_size_unsgnd(num, size);
+	number = converting_size_unsgnd(number, siz);
 
-	if (num == 0)
-		buffer[i--] = '0';
+	if (number == 0)
+		buff[n--] = '0';
 
-	buffer[BUFF_SIZE - 1] = '\0';
+	buff[BUFF_SIZE - 1] = '\0';
 
-	while (num > 0)
+	while (number > 0)
 	{
-		buffer[i--] = (num % 8) + '0';
-		num /= 8;
+		buff[n--] = (number % 8) + '0';
+		number /= 8;
 	}
 
-	if (flags & F_HASH && init_num != 0)
-		buffer[i--] = '0';
+	if (flag & F_HASH && init_number != 0)
+		buff[n--] = '0';
 
-	i++;
+	n++;
 
-	return (write_unsgnd(0, i, buffer, flags, width, precision, size));
+	return (writing_unsgnd(0, n, buff, flag, wid, pre_ion, siz));
 }
 
-/************** PRINT UNSIGNED NUMBER IN HEXADECIMAL **************/
 /**
- * print_hexadecimal - Prints an unsigned number in hexadecimal notation
- * @types: Lista of arguments
- * @buffer: Buffer array to handle print
- * @flags:  Calculates active flags
- * @width: get width
- * @precision: Precision specification
- * @size: Size specifier
- * Return: Number of chars printed
+ * printing_hexadecimal - Prints an unsigned number in hexadecimal notation
+ * @type: List a number of arguments in the function
+ * @buff: Buffer array to handle print
+ * @flag: it the  Calculate active flags
+ * @wid: get width
+ * @pre_ion: Precision specification
+ * @siz: Size specifier
+ * Return: Num of characters printed.
  */
-int print_hexadecimal(va_list types, char buffer[],
-	int flags, int width, int precision, int size)
+int printing_hexadecimal(va_list type, char buff[],
+	int flag, int wid, int pre_ion, int siz)
 {
-	return (print_hexa(types, "0123456789abcdef", buffer,
-		flags, 'x', width, precision, size));
+	return (printing_hexa(type, "0123456789abcdef", buff,
+		flag, 'x', wid, pre_ion, siz));
 }
 
-/************* PRINT UNSIGNED NUMBER IN UPPER HEXADECIMAL **************/
 /**
- * print_hexa_upper - Prints an unsigned number in upper hexadecimal notation
- * @types: Lista of arguments
- * @buffer: Buffer array to handle print
- * @flags:  Calculates active flags
- * @width: get width
- * @precision: Precision specification
- * @size: Size specifier
- * Return: Number of chars printed
+ * printing_hexa_upper - Prints an unsigned num  upper hexadecimal
+ * @type: List a number of arguments in the function
+ * @buff: Buffer array to handle print
+ * @flag: it the  Calculate active flags
+ * @wid: get width
+ * @pre_ion: Precision specification
+ * @siz: Size specifier
+ * Return: Num of characters printed.
  */
-int print_hexa_upper(va_list types, char buffer[],
-	int flags, int width, int precision, int size)
+int printing_hexa_upper(va_list type, char buff[],
+	int flag, int wid, int pre_ion, int siz)
 {
-	return (print_hexa(types, "0123456789ABCDEF", buffer,
-		flags, 'X', width, precision, size));
+	return (printing_hexa(type, "0123456789ABCDEF", buff,
+		flag, 'X', wid, pre_ion, siz));
 }
 
-/************** PRINT HEXX NUM IN LOWER OR UPPER **************/
 /**
- * print_hexa - Prints a hexadecimal number in lower or upper
- * @types: Lista of arguments
+ * printing_hexa - a function Prints a hexadecimal number in lower or upper
+ * @type: List a number of arguments in the function
+ * @buff: Buffer array to handle print
+ * @flag: it the  Calculate active flags
  * @map_to: Array of values to map the number to
- * @buffer: Buffer array to handle print
- * @flags:  Calculates active flags
- * @flag_ch: Calculates active flags
- * @width: get width
- * @precision: Precision specification
- * @size: Size specifier
- * @size: Size specification
- * Return: Number of chars printed
+ * @flag_character: it Calculates active flags
+ * @wid: get width
+ * @pre_ion: Precision specification
+ * @siz: Size specifier
+ * Return: Num of characters printed.
  */
-int print_hexa(va_list types, char map_to[], char buffer[],
-	int flags, char flag_ch, int width, int precision, int size)
+int printing_hexa(va_list type, char map_to[], char buff[],
+	int flag, char flag_character, int wid, int pre_ion, int siz)
 {
-	int i = BUFF_SIZE - 2;
-	unsigned long int num = va_arg(types, unsigned long int);
-	unsigned long int init_num = num;
+	int n = BUFF_SIZE - 2;
+	unsigned long int number = va_arg(type, unsigned long int);
+	unsigned long int init_number = number;
 
-	UNUSED(width);
+	UNUSED(wid);
 
-	num = convert_size_unsgnd(num, size);
+	number = converting_size_unsgnd(number, siz);
 
-	if (num == 0)
-		buffer[i--] = '0';
+	if (number == 0)
+		buff[n--] = '0';
 
-	buffer[BUFF_SIZE - 1] = '\0';
+	buff[BUFF_SIZE - 1] = '\0';
 
-	while (num > 0)
+	while (number > 0)
 	{
-		buffer[i--] = map_to[num % 16];
-		num /= 16;
+		buff[n--] = map_to[number % 16];
+		number /= 16;
 	}
 
-	if (flags & F_HASH && init_num != 0)
+	if (flag & F_HASH && init_number != 0)
 	{
-		buffer[i--] = flag_ch;
-		buffer[i--] = '0';
+		buff[n--] = flag_character;
+		buff[n--] = '0';
 	}
 
-	i++;
+	n++;
 
-	return (write_unsgnd(0, i, buffer, flags, width, precision, size));
+	return (writing_unsgnd(0, n, buff, flag, wid, pre_ion, siz));
 }
